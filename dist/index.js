@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.HttpCustom = exports.HttpPost = exports.HttpGet = void 0;
+exports.HttpCustomJson = exports.HttpCustom = exports.HttpPostJson = exports.HttpPost = exports.HttpGetJson = exports.HttpGet = void 0;
 var node_fetch_1 = __importDefault(require("node-fetch"));
 function HttpGet(url, headers, objectResponse) {
     if (objectResponse === void 0) { objectResponse = false; }
@@ -53,6 +53,17 @@ function HttpGet(url, headers, objectResponse) {
     });
 }
 exports.HttpGet = HttpGet;
+function HttpGetJson(url, headers) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, HttpCustomJson("get", url, undefined, headers)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+exports.HttpGetJson = HttpGetJson;
 function HttpPost(url, data, headers, objectResponse) {
     if (objectResponse === void 0) { objectResponse = false; }
     return __awaiter(this, void 0, void 0, function () {
@@ -65,6 +76,17 @@ function HttpPost(url, data, headers, objectResponse) {
     });
 }
 exports.HttpPost = HttpPost;
+function HttpPostJson(url, data, headers) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, HttpCustomJson("post", url, data, headers)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+exports.HttpPostJson = HttpPostJson;
 function HttpCustom(method, url, body, headers, objectResponse) {
     if (objectResponse === void 0) { objectResponse = false; }
     return __awaiter(this, void 0, void 0, function () {
@@ -86,17 +108,31 @@ function HttpCustom(method, url, body, headers, objectResponse) {
                     };
                     if (body)
                         req["body"] = body;
-                    return [4 /*yield*/, node_fetch_1["default"](url, req)];
+                    return [4 /*yield*/, (0, node_fetch_1["default"])(url, req)];
                 case 3:
                     res = _a.sent();
-                    if (!objectResponse) return [3 /*break*/, 5];
-                    return [4 /*yield*/, res];
+                    if (objectResponse) {
+                        return [2 /*return*/, res];
+                    }
+                    return [4 /*yield*/, res.text()];
                 case 4: return [2 /*return*/, _a.sent()];
-                case 5: return [4 /*yield*/, res.text()];
-                case 6: return [2 /*return*/, _a.sent()];
             }
         });
     });
 }
 exports.HttpCustom = HttpCustom;
+function HttpCustomJson(method, url, body, headers) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    _b = (_a = JSON).parse;
+                    return [4 /*yield*/, HttpCustom(method, url, body, headers, false)];
+                case 1: return [2 /*return*/, _b.apply(_a, [_c.sent()])];
+            }
+        });
+    });
+}
+exports.HttpCustomJson = HttpCustomJson;
 //# sourceMappingURL=index.js.map
