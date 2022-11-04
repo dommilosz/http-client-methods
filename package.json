@@ -9,7 +9,7 @@
   "scripts": {
     "debug": "nodemon src/index.ts",
     "build": "tsc",
-    "npm-publish": "tsc && npm publish"
+    "prepublishOnly": "tsc"
   },
   "keywords": [],
   "author": "",
